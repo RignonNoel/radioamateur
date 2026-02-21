@@ -1,0 +1,28 @@
+@use 'sass:color';
+@use '../../../../styles.scss' as *;
+
+.btn-radio {
+  display: inline-block; // Important pour un <a>
+  text-decoration: none;
+  text-align: center;
+  border-radius: 0;
+  padding: 9px 24px;
+
+  &.primary {
+    background-color: $color-primary;
+    color: white;
+    border: 1.5px solid $color-primary;
+    &:hover {
+      background-color: color.adjust($color-primary, $lightness: 10%);
+    }
+  }
+
+  &.secondary {
+    background: transparent;
+    color: $color-primary;
+    border: 1.5px solid $color-primary;
+    &:hover {
+      background-color: color.adjust($color-primary, $lightness: 70%);
+    }
+  }
+}

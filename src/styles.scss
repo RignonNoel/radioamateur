@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+// --- VARIABLES DE COULEURS ---
+$color-primary: #4a3a12;
+$color-accent: #ca9c30;
+$color-danger: #e74c3c;
+$color-bg: #fff9f1;
+$color-text: #0f0f0f;
+
+// --- TYPOGRAPHIE ---
+$font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+$font-mono: 'Courier New', monospace; // Pour un look "fréquences radio"
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-main;
+  background-color: $color-bg;
+  color: $color-text;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  color: $color-primary;
+  margin-bottom: 1rem;
+}
