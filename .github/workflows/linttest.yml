@@ -1,4 +1,4 @@
-name: Linting
+name: LintingTest
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   lint:
-    name: Linting
+    name: Lintingtest
     runs-on: ubuntu-latest
 
     steps:
