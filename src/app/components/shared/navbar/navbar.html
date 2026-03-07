@@ -1,5 +1,5 @@
 <nav>
-  <div>
+  <!-- <div>
     <span>Radioamateur</span>
   </div>
   <ul>
@@ -11,5 +11,28 @@
   <div class="btn-navbar">
     <app-button variant="secondary" type="submit">Envoyer</app-button>
     <app-button type="submit">Envoyer</app-button>
+  </div> -->
+
+  <div class="logo">
+    <span>Radioamateur</span>
+  </div>
+
+  <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="nav-content" [class.active]="isMenuOpen">
+    <ul>
+      <li><a href="#" (click)="isMenuOpen = false">Mission</a></li>
+      <li><a href="#" (click)="isMenuOpen = false">Devenir membre</a></li>
+      <li><a href="#" (click)="isMenuOpen = false">Événements</a></li>
+    </ul>
+
+    <div class="btn-navbar">
+      <app-button variant="secondary" type="submit">Envoyer</app-button>
+      <app-button type="submit">Envoyer</app-button>
+    </div>
   </div>
 </nav>

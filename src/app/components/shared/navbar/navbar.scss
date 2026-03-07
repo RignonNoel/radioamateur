@@ -9,6 +9,14 @@ nav {
   padding: 10px 20px;
 }
 
+.nav-content {
+  display: flex; // Force l'alignement horizontal sur desktop
+  align-items: center;
+  justify-content: space-between;
+  flex: 1; // Prend l'espace disponible au milieu
+  margin-left: 2rem; // Espace par rapport au logo
+}
+
 .btn-navbar {
   display: flex;
   gap: 1rem;
@@ -21,6 +29,7 @@ ul {
   list-style: none;
   padding: 0px;
   margin: 0px;
+  flex: 1; // Centre le menu entre le logo et les boutons
 }
 
 a {
@@ -36,4 +45,76 @@ a {
 span {
   font-weight: 900;
   font-size: 1.2em;
+  color: $color-primary;
+}
+
+// Style du bouton Hamburger
+.hamburger {
+  display: none; // Caché sur desktop
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+
+  span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: $color-primary;
+    transition: 0.3s;
+  }
+}
+
+// --- MEDIA QUERIES (Mobile) ---
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-content {
+    display: none; // Caché par défaut
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: 100vh;
+    background: #fff;
+    padding-top: 80px 20px 40px 20px;
+    justify-content: flex-start;
+    gap: 2rem;
+    overflow-y: auto;
+
+    &.active {
+      display: flex;
+    }
+
+    ul {
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      gap: 1rem;
+      flex: 0;
+    }
+
+    .btn-navbar {
+      flex-direction: column;
+      width: 80%;
+    }
+  }
+
+  // Animation X du hamburger quand ouvert
+  .hamburger.open {
+    span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
 }
