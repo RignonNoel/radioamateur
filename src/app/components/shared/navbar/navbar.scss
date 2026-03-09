@@ -42,7 +42,7 @@ a {
   }
 }
 
-span {
+.span-logo {
   font-weight: 900;
   font-size: 1.2em;
   color: $color-primary;
@@ -58,7 +58,7 @@ span {
   cursor: pointer;
   z-index: 1000;
 
-  span {
+  .span-logo {
     display: block;
     width: 25px;
     height: 3px;
