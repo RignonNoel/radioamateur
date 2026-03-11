@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './exam-generator.html',
   styleUrl: './exam-generator.scss',
 })
-export class ExamGenerator { }
+export class ExamGenerator {}
