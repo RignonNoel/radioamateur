@@ -1,9 +1,0 @@
-@if (link()) {
-  <a [routerLink]="link()" [class]="'btn-radio ' + variant()">
-    <ng-content></ng-content>
-  </a>
-} @else {
-  <button [type]="type()" [class]="'btn-radio ' + variant()" (click)="onClick()">
-    <ng-content></ng-content>
-  </button>
-}
