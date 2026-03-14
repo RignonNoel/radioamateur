@@ -1,1 +1,70 @@
 <p>exam-generator works!5</p>
+
+<router-outlet />
+<!-- Ajout d'un menu déroullant  -->
+<div style="padding: 20px; max-width: 600px">
+  <h2 style="color: #2c3e50; border-bottom: 2px solid #2c3e50">Configuration du Quiz</h2>
+
+  <div style="margin-bottom: 20px; background: #f9f9f9; padding: 15px; border: 1px solid #ddd">
+    <label for="category-select" style="display: block; margin-bottom: 8px"
+      >Choisir une section d'étude :</label
+    >
+
+    <select
+      id="category-select"
+      style="width: 100%; padding: 8px; margin-bottom: 12px"
+      (change)="onCategoryChange($event)"
+    >
+      <option value="">-- Sélectionnez une section --</option>
+      @for (cat of categories; track cat.code) {
+        <option [value]="cat.code">{{ cat.code }} - {{ cat.name }}</option>
+      }
+    </select>
+
+    <button
+      (click)="chargerQuestionParCategorie()"
+      [disabled]="!selectedCategory()"
+      style="
+        width: 100%;
+        padding: 10px;
+        cursor: pointer;
+        background: #2c3e50;
+        color: white;
+        border: none;
+      "
+    >
+      Générer une question de cette section
+    </button>
+  </div>
+
+  @if (currentQuestionLabel()) {
+    <div class="question-card" style="border: 2px solid #2c3e50; padding: 15px; background: white">
+      <p>
+        <strong>Section {{ selectedCategory() }} :</strong> {{ currentQuestionLabel() }}
+      </p>
+
+      <form>
+        @for (answer of currentAnswers(); track $index) {
+          <div style="margin: 10px 0">
+            <input
+              type="radio"
+              name="quiz-answer"
+              [id]="'ans-' + $index"
+              [value]="answer"
+              [checked]="selectedAnswer() === answer"
+              (change)="selectedAnswer.set(answer)"
+            />
+            <label [for]="'ans-' + $index">{{ answer }}</label>
+          </div>
+        }
+      </form>
+
+      <button (click)="verifierReponse()" [disabled]="!selectedAnswer()">Valider</button>
+      <button (click)="chargerQuestionParCategorie()" style="margin-left: 10px">Suivante</button>
+
+      @if (feedback()) {
+        <p style="margin-top: 15px; padding: 10px; background: #eee">{{ feedback() }}</p>
+      }
+    </div>
+  }
+</div>
