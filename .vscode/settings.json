@@ -7,5 +7,6 @@
     "angular-component": {
       "skipChangeDetectionOnPush": true
     }
-  }
+  },
+  "git.ignoreLimitWarning": true
 }
