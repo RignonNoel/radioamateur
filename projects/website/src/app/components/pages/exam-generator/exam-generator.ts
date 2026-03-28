@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ServiceQuestions } from '../../../services/service-questions';
+import { PracticeExam } from '../../../services/practice-exam';
 
 @Component({
   selector: 'app-exam-generator',
@@ -10,66 +11,70 @@ import { ServiceQuestions } from '../../../services/service-questions';
   styleUrl: './exam-generator.scss',
 })
 export class ExamGenerator implements OnInit {
-  // La liste de tes sections (tu pourras compléter la liste jusqu'à B-015)
+  // Cette partie à revoir
   categories = [
     { code: 'B-001', name: 'Règlements et politiques' },
-    { code: 'B-002', name: 'Brouillage et interférence' },
-    { code: 'B-003', name: 'Exploitation et procédures' },
-    { code: 'B-004', name: 'Systèmes radio' },
+    { code: 'B-002', name: 'Procédures d’exploitation' },
+    { code: 'B-003', name: 'Modes de transmission' },
+    { code: 'B-004', name: 'Circuits et composants' },
+    { code: 'B-005', name: 'Signaux et mesures' },
+    { code: 'B-006', name: 'Antennes et lignes' },
+    { code: 'B-007', name: 'Propagation' },
+    { code: 'B-008', name: 'Brouillage et sécurité' },
     // Ajoute les autres ici...
   ];
 
-  selectedCategory = signal<string>(''); // Stocke la section choisie (ex: 'B-001')
+  selectedCategory = signal<string>('');
   currentQuestionLabel = signal<string>('');
   currentAnswers = signal<string[]>([]);
-  selectedAnswer = signal<string>(''); // Stocke le choix de l'utilisateur
+  selectedAnswer = signal<string>('');
   feedback = signal<string>(''); // Message de succès ou d'erreur
   currentId = '';
+  quantity = signal<number>(10);
+  examEnd = signal<boolean>(false);
+  questionsAnswered = signal<number>(0);
+  hasValidated = signal<boolean>(false);
 
-  // L'injection de ton service se fait ici dans le constructeur
-  constructor(private questionService: ServiceQuestions) {}
+  constructor(
+    private questionService: ServiceQuestions,
+    public practiceExam: PracticeExam,
+  ) {}
 
-  ngOnInit() {
-    //
-  }
+  ngOnInit() {}
 
-  chargerNouvelleQuestion() {
-    this.feedback.set('');
-    this.selectedAnswer.set('');
-
-    this.questionService.getRandomQuestionId().subscribe((id) => {
-      this.currentId = id;
-      this.questionService
-        .getLabelForQuestion(id)
-        .subscribe((label) => this.currentQuestionLabel.set(label));
-      this.questionService
-        .getRandomizedAnswersForQuestion(id)
-        .subscribe((answers) => this.currentAnswers.set(answers));
-    });
-  }
-
-  // Cette fonction est appelée par le bouton "Démarrer" ou "Suivante"
-  onCategoryChange(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedCategory.set(selectElement.value);
-    // On réinitialise l'affichage si on change de catégorie
-    this.currentQuestionLabel.set('');
-    this.feedback.set('');
-  }
-
-  chargerQuestionParCategorie() {
+  startExam() {
     const cat = this.selectedCategory();
     if (!cat) return;
 
+    this.examEnd.set(false);
+    this.questionsAnswered.set(0);
+    this.hasValidated.set(false);
+    this.feedback.set('');
+    this.practiceExam.startNewExam(this.quantity(), [cat]);
+
+    this.loadQuestion(cat);
+  }
+
+  loadQuestionByCategory() {
+    //Compteur
+    this.questionsAnswered.update((n) => n + 1);
+
+    if (this.questionsAnswered() >= this.quantity()) {
+      this.examEnd.set(true);
+      return;
+    }
+
     this.feedback.set('');
     this.selectedAnswer.set('');
+    this.hasValidated.set(false);
 
-    // On utilise ton service spécialisé pour les catégories
+    this.loadQuestion(this.selectedCategory());
+  }
+  // On utilise ton service spécialisé pour les catégories
+  private loadQuestion(cat: string) {
     this.questionService.getRandomQuestionOfCategory(cat).subscribe((id) => {
       if (id) {
         this.currentId = id;
-
-        // Charger le texte de la question
         this.questionService.getLabelForQuestion(id).subscribe((label) => {
           this.currentQuestionLabel.set(label);
         });
@@ -84,19 +89,29 @@ export class ExamGenerator implements OnInit {
 
   // La fonction pour vérifier les réponses
   verifierReponse() {
-    if (!this.selectedAnswer()) return;
+    if (!this.selectedAnswer() || this.hasValidated()) return;
 
-    // On utilise ton service pour vérifier (on suppose ici qu'on est en français)
     this.questionService.getQuestions().subscribe((questions) => {
       const q = questions.find((item) => item.question_id === this.currentId);
       if (q) {
-        const estBon = this.questionService.isCorrect(q, this.selectedAnswer(), 'fr');
+        const isCorrect = this.questionService.isCorrect(q, this.selectedAnswer(), 'fr');
         this.feedback.set(
-          estBon
+          isCorrect
             ? '✅ Bonne réponse !'
             : `❌ Erreur. La réponse était : ${q.correct_answer_french}`,
         );
+        this.practiceExam.updateAnswer(this.currentId, this.selectedAnswer());
+        this.hasValidated.set(true);
       }
     });
+  }
+  onCategoryChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedCategory.set(selectElement.value);
+  }
+
+  onQuantityChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.quantity.set(parseInt(selectElement.value, 10));
   }
 }

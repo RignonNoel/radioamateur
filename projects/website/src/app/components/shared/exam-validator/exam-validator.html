@@ -1,0 +1,35 @@
+<div>
+  @if (currentQuestion) {
+    <div>
+      <span>{{ currentQuestion.question_id }}</span>
+      <h2>Question {{ currentQuestion.question_id }}</h2>
+    </div>
+
+    <p>{{ currentQuestion.question_french }}</p>
+
+    <div>
+      @for (option of ['a', 'b', 'c', 'd']; track option) {
+        @let reponseTexte = getReponseParLettre(option);
+
+        <button
+          type="button"
+          [class.selected]="userAnswer === reponseTexte"
+          (click)="onSelectAnswer(reponseTexte)"
+        >
+          <span>{{ option.toUpperCase() }}.</span>
+          <span>{{ reponseTexte }}</span>
+        </button>
+      }
+    </div>
+
+    @if (userAnswer) {
+      <div>
+        <p>Votre réponse est enregistrée dans le navigateur.</p>
+      </div>
+    }
+  } @else {
+    <div>
+      <p>Chargement de la question de radio amateur...</p>
+    </div>
+  }
+</div>

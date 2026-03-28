@@ -1,70 +1,83 @@
-<p>exam-generator works!5</p>
-
 <router-outlet />
-<!-- Ajout d'un menu déroullant  -->
-<div style="padding: 20px; max-width: 600px">
-  <h2 style="color: #2c3e50; border-bottom: 2px solid #2c3e50">Configuration du Quiz</h2>
 
-  <div style="margin-bottom: 20px; background: #f9f9f9; padding: 15px; border: 1px solid #ddd">
-    <label for="category-select" style="display: block; margin-bottom: 8px"
-      >Choisir une section d'étude :</label
-    >
+<div>
+  <h2>Générateur d'Examen</h2>
 
-    <select
-      id="category-select"
-      style="width: 100%; padding: 8px; margin-bottom: 12px"
-      (change)="onCategoryChange($event)"
-    >
+  <div class="controls-container">
+    <label>Nombre de questions :</label>
+    <select (change)="onQuantityChange($event)">
+      <option value="10">10 questions</option>
+      <option value="20">20 questions</option>
+      <option value="50">50 questions</option>
+      <option value="100">100 questions</option>
+    </select>
+
+    <label>Choisir une section :</label>
+    <select (change)="onCategoryChange($event)">
       <option value="">-- Sélectionnez une section --</option>
       @for (cat of categories; track cat.code) {
         <option [value]="cat.code">{{ cat.code }} - {{ cat.name }}</option>
       }
     </select>
 
-    <button
-      (click)="chargerQuestionParCategorie()"
-      [disabled]="!selectedCategory()"
-      style="
-        width: 100%;
-        padding: 10px;
-        cursor: pointer;
-        background: #2c3e50;
-        color: white;
-        border: none;
-      "
-    >
-      Générer une question de cette section
-    </button>
+    <div>
+      <button (click)="startExam()" [disabled]="!selectedCategory()" class="btn-primary">
+        Débuter
+      </button>
+    </div>
   </div>
+  <div>
+    @if (examEnd()) {
+      <div>
+        <h2>Félicitations !</h2>
+        <p>Vous avez terminé votre série de {{ quantity() }} questions.</p>
+        <p>Votre score est enregistré dans votre profil.</p>
+        <button (click)="examEnd.set(false); selectedCategory.set('')">Recommencer</button>
+      </div>
+    }
+  </div>
+  <div>
+    @if (currentQuestionLabel() && !examEnd()) {
+      <div class="question-card">
+        <p class="progress">Question {{ questionsAnswered() + 1 }} sur {{ quantity() }}</p>
 
-  @if (currentQuestionLabel()) {
-    <div class="question-card" style="border: 2px solid #2c3e50; padding: 15px; background: white">
-      <p>
-        <strong>Section {{ selectedCategory() }} :</strong> {{ currentQuestionLabel() }}
-      </p>
+        <p><strong>Question :</strong> {{ currentQuestionLabel() }}</p>
+        <form>
+          @for (answer of currentAnswers(); track $index) {
+            <div class="answer-option">
+              <input
+                type="radio"
+                name="ans"
+                [id]="'a' + $index"
+                [value]="answer"
+                (change)="selectedAnswer.set(answer)"
+                [checked]="selectedAnswer() === answer"
+                [disabled]="hasValidated()"
+              />
+              <label [for]="'a' + $index">{{ answer }}</label>
+            </div>
+          }
+        </form>
 
-      <form>
-        @for (answer of currentAnswers(); track $index) {
-          <div style="margin: 10px 0">
-            <input
-              type="radio"
-              name="quiz-answer"
-              [id]="'ans-' + $index"
-              [value]="answer"
-              [checked]="selectedAnswer() === answer"
-              (change)="selectedAnswer.set(answer)"
-            />
-            <label [for]="'ans-' + $index">{{ answer }}</label>
+        @if (feedback()) {
+          <div>
+            {{ feedback() }}
           </div>
         }
-      </form>
+        <div>
+          @if (!hasValidated()) {
+            <button (click)="verifierReponse()" [disabled]="!selectedAnswer()">
+              Valider la réponse
+            </button>
+          }
 
-      <button (click)="verifierReponse()" [disabled]="!selectedAnswer()">Valider</button>
-      <button (click)="chargerQuestionParCategorie()" style="margin-left: 10px">Suivante</button>
-
-      @if (feedback()) {
-        <p style="margin-top: 15px; padding: 10px; background: #eee">{{ feedback() }}</p>
-      }
-    </div>
-  }
+          @if (hasValidated()) {
+            <button (click)="loadQuestionByCategory()" class="btn-next">
+              {{ questionsAnswered() < quantity() ? 'Question Suivante' : "Terminer l'examen" }}
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
 </div>
