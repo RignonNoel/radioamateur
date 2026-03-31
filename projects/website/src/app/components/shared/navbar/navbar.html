@@ -1,27 +1,30 @@
-<nav>
-  <div class="logo">
-    <span class="span-logo" a routerLink="/">Radioamateur</span>
+<nav class="navbar">
+  <div class="navbar__logo">
+    <span class="navbar__logo-text" a routerLink="/">Radioamateur</span>
   </div>
 
-  <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
-    <span></span>
-    <span></span>
-    <span></span>
+  <button class="navbar__toggle" (click)="isMenuOpen = !isMenuOpen">
+    <i class="fa-solid" [class.fa-xmark]="isMenuOpen" [class.fa-bars]="!isMenuOpen"></i>
   </button>
 
-  <div class="nav-content" [class.active]="isMenuOpen">
-    <ul>
-      <li><a href="#" (click)="isMenuOpen = false">Mission</a></li>
-      <li><a href="#" (click)="isMenuOpen = false">Devenir membre</a></li>
-      <li><a href="#" (click)="isMenuOpen = false">Événements</a></li>
-      <li><a routerLink="/examens" (click)="isMenuOpen = false">Générateur d'examens</a></li>
+  <div class="navbar__container" [class.active]="isMenuOpen">
+    <ul class="navbar__menu">
+      <li class="navbar__item">
+        <a href="#" (click)="isMenuOpen = false" class="navbar__link">Apprendre</a>
+      </li>
+      <li><a href="#" (click)="isMenuOpen = false" class="navbar__link">Pratiquer</a></li>
+      <li>
+        <a routerLink="/examens" (click)="isMenuOpen = false" class="navbar__link"
+          >Générateur d'examens</a
+        >
+      </li>
     </ul>
+  </div>
 
-    <div class="btn-navbar">
-      <app-button variant="secondary" type="submit"
-        ><span style="margin-right: 8px">Connexion</span><i class="fa-regular fa-user"></i
-      ></app-button>
-      <app-button type="submit">Portail éducatif</app-button>
-    </div>
+  <div class="navbar__button" [class.active]="isMenuOpen">
+    <app-button variant="secondary" type="submit"
+      ><span style="margin-right: 8px">Connexion</span><i class="fa-regular fa-user"></i
+    ></app-button>
+    <app-button type="submit">Portail éducatif</app-button>
   </div>
 </nav>

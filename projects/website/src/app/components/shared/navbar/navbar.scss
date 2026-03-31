@@ -1,120 +1,120 @@
 @use 'sass:color';
 @use '../../../../styles.scss' as *;
 
-nav {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
   background-color: white;
   padding: 10px 20px;
-}
 
-.nav-content {
-  display: flex; // Force l'alignement horizontal sur desktop
-  align-items: center;
-  justify-content: space-between;
-  flex: 1; // Prend l'espace disponible au milieu
-  margin-left: 2rem; // Espace par rapport au logo
-}
+  // &__logo {
+  //   //rien
+  // }
 
-.btn-navbar {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-ul {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  padding: 0px;
-  margin: 0px;
-  flex: 1; // Centre le menu entre le logo et les boutons
-}
-
-a {
-  text-decoration: none;
-  margin: 0 10px;
-  color: $color-primary;
-
-  &:hover {
-    color: $color-accent;
-  }
-}
-
-.span-logo {
-  font-weight: 900;
-  font-size: 1.2em;
-  color: $color-primary;
-}
-
-// Style du bouton Hamburger
-.hamburger {
-  display: none; // Caché sur desktop
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 1000;
-
-  .span-logo {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: $color-primary;
-    transition: 0.3s;
-  }
-}
-
-// --- MEDIA QUERIES (Mobile) ---
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex;
+  &__logo-text {
+    font-weight: 900;
+    font-size: 1.2em;
+    color: $color-primary;
   }
 
-  .nav-content {
-    display: none; // Caché par défaut
+  &__toggle {
+    display: none;
+    background: none;
     flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 80%;
-    height: 100vh;
-    background: #fff;
-    padding-top: 80px 20px 40px 20px;
-    justify-content: flex-start;
-    gap: 2rem;
-    overflow-y: auto;
+    color: $color-primary;
+    gap: 5px;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
 
-    &.active {
-      display: flex;
+    @media (max-width: 768px) {
+      display: block;
+      order: 3;
+    }
+  }
+
+  &__container {
+    flex: 1; // Prend l'espace disponible au milieu
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 768px) {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: #fff;
+      flex-direction: column;
+      z-index: 100;
+
+      &.active {
+        display: flex !important;
+      }
+    }
+  }
+
+  &__menu {
+    display: flex;
+    justify-content: center;
+    // list-style: none;
+    padding: 0px;
+    margin: 0px;
+    flex: 1; // Centre le menu entre le logo et les boutons
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      width: 100%;
+      padding: 20px 0;
+      align-items: center;
+    }
+  }
+
+  // &__item {
+  //   //rien
+  // }
+
+  &__link {
+    text-decoration: none;
+    margin: 0 10px;
+    color: $color-primary;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $color-accent;
     }
 
-    ul {
+    @media (max-width: 768px) {
+      display: block;
+      padding: 15px;
+      text-align: center;
+      width: 100%;
+      color: $color-primary;
+    }
+  }
+
+  &__button {
+    display: flex;
+    gap: 1rem;
+
+    @media (max-width: 768px) {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: 100%;
+      top: 250px;
       flex-direction: column;
       align-items: center;
-      margin-top: 40px;
-      gap: 1rem;
-      flex: 0;
+      padding-bottom: 20px;
+      z-index: 101;
+      background-color: #fff;
     }
 
-    .btn-navbar {
-      flex-direction: column;
-      width: 80%;
-    }
-  }
-
-  // Animation X du hamburger quand ouvert
-  .hamburger.open {
-    span:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
-    span:nth-child(2) {
-      opacity: 0;
-    }
-    span:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
+    &.active {
+      display: flex !important;
     }
   }
 }

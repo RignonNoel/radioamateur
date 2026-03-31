@@ -5,8 +5,34 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
-html {
+// --- VARIABLES DE COULEURS ---
+$color-primary: #4a3a12;
+$color-accent: #ca9c30;
+$color-danger: #e74c3c;
+$color-bg: #fff9f1;
+$color-text: #0f0f0f;
+
+// --- TYPOGRAPHIE ---
+$font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+$font-mono: 'Courier New', monospace;
+
+/* --- RESET SCSS --- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
   height: 100%;
+  font-family: $font-main;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-color: $color-bg;
   @include mat.theme(
     (
       color: (
@@ -19,53 +45,32 @@ html {
   );
 }
 
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-  height: 100%;
-}
-// --- VARIABLES DE COULEURS ---
-$color-primary: #4a3a12;
-$color-accent: #ca9c30;
-$color-danger: #e74c3c;
-$color-bg: #fff9f1;
-$color-text: #0f0f0f;
-
-// --- TYPOGRAPHIE ---
-$font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-$font-mono: 'Courier New', monospace; // Pour un look "fréquences radio"
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: $font-main;
-  background-color: $color-bg;
-  color: $color-text;
-  line-height: 1.6;
-}
-
-h1,
-h2,
-h3 {
-  color: $color-primary;
-  margin-bottom: 1rem;
-}
-
-a,
 button,
-p {
-  font-size: 14px;
-  color: $color-primary;
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+fieldset {
+  border: none;
 }
