@@ -6,8 +6,8 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  background-color: white;
-  padding: 10px 20px;
+  background-color: $color-text;
+  padding: 13px 20px;
 
   // &__logo {
   //   //rien
@@ -15,8 +15,8 @@
 
   &__logo-text {
     font-weight: 900;
-    font-size: 1.2em;
-    color: $color-primary;
+    font-size: 24px;
+    color: $color-accent;
   }
 
   &__toggle {
@@ -46,7 +46,7 @@
       top: 100%;
       left: 0;
       width: 100%;
-      background-color: #fff;
+      background-color: $color-text;
       flex-direction: column;
       z-index: 100;
 
@@ -59,7 +59,6 @@
   &__menu {
     display: flex;
     justify-content: center;
-    // list-style: none;
     padding: 0px;
     margin: 0px;
     flex: 1; // Centre le menu entre le logo et les boutons
@@ -79,7 +78,10 @@
   &__link {
     text-decoration: none;
     margin: 0 10px;
-    color: $color-primary;
+    color: $color-bg;
+    font-size: 14px;
+    font-family: $font-main;
+    font-weight: 400;
     transition: color 0.3s;
 
     &:hover {
@@ -91,7 +93,6 @@
       padding: 15px;
       text-align: center;
       width: 100%;
-      color: $color-primary;
     }
   }
 
@@ -105,12 +106,12 @@
       left: 0;
       right: 0;
       width: 100%;
-      top: 250px;
+      top: 200px;
       flex-direction: column;
       align-items: center;
-      padding-bottom: 20px;
+      padding: 0 0 20px 20px;
       z-index: 101;
-      background-color: #fff;
+      background-color: $color-text;
     }
 
     &.active {

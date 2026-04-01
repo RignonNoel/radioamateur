@@ -4,6 +4,8 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 // --- VARIABLES DE COULEURS ---
 $color-primary: #4a3a12;
@@ -13,8 +15,8 @@ $color-bg: #fff9f1;
 $color-text: #0f0f0f;
 
 // --- TYPOGRAPHIE ---
-$font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-$font-mono: 'Courier New', monospace;
+$font-main: 'Source Sans Pro', sans-serif;
+$font-mono: 'VT323', monospace;
 
 /* --- RESET SCSS --- */
 

@@ -12,19 +12,17 @@
       <li class="navbar__item">
         <a href="#" (click)="isMenuOpen = false" class="navbar__link">Apprendre</a>
       </li>
-      <li><a href="#" (click)="isMenuOpen = false" class="navbar__link">Pratiquer</a></li>
       <li>
-        <a routerLink="/examens" (click)="isMenuOpen = false" class="navbar__link"
-          >Générateur d'examens</a
-        >
+        <a routerLink="/examens" (click)="isMenuOpen = false" class="navbar__link">Pratiquer</a>
       </li>
     </ul>
   </div>
 
   <div class="navbar__button" [class.active]="isMenuOpen">
     <app-button variant="secondary" type="submit"
-      ><span style="margin-right: 8px">Connexion</span><i class="fa-regular fa-user"></i
+      ><span class="navbar__button-text">Connexion&nbsp;&nbsp;&nbsp;</span
+      ><i class="fa-regular fa-user navbar__button-icon"></i
     ></app-button>
-    <app-button type="submit">Portail éducatif</app-button>
+    <app-button type="submit" class="navbar__button-text">Portail éducatif</app-button>
   </div>
 </nav>
