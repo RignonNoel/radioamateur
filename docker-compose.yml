@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: projects/api
+      dockerfile: Dockerfile
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./projects/api:/app
+      - api_data:/data
+      - api-node-modules:/app/node_modules
+
+  website:
+    restart: on-failure
+    environment:
+      NG_ALLOWED_HOSTS: website,localhost
+    build:
+      context: projects/website
+      dockerfile: Dockerfile
+    volumes:
+      - ./projects/website:/code
+      - website-node-modules:/code/node_modules
+    command: "npm run start"
+    ports:
+      - "4200:4200"
+
+volumes:
+  api_data:
+  api-node-modules:
+  website-node-modules:

@@ -1,0 +1,19 @@
+{
+    "name": "express-docker-api",
+    "version": "1.0.0",
+    "description": "Minimal Express API with Docker Compose and Basic Auth",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node src/index.js",
+        "dev": "nodemon --legacy-watch src/index.js"
+    },
+    "dependencies": {
+        "bcryptjs": "^3.0.3",
+        "cors": "^2.8.6",
+        "express": "^4.19.2",
+        "sqlite3": "^5.1.7"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.14"
+    }
+}
