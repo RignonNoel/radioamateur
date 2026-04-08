@@ -1,0 +1,12 @@
+services:
+  cypress:
+    build:
+      context: ./e2e/cypress
+      dockerfile: Dockerfile
+    environment:
+      CYPRESS_baseUrl: http://website:4200
+      CYPRESS_apiUrl: http://api:3000
+      CI: "true"
+    depends_on:
+      - api
+      - website
