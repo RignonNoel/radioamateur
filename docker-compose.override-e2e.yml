@@ -7,6 +7,12 @@ services:
       CYPRESS_baseUrl: http://website:4200
       CYPRESS_apiUrl: http://api:3000
       CI: "true"
+    volumes:
+      - ./e2e/cypress:/e2e/cypress
+      - cypress-node-modules:/e2e/cypress/node_modules
     depends_on:
       - api
       - website
+
+volumes:
+  cypress-node-modules:
